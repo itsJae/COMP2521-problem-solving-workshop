@@ -6,6 +6,7 @@ Practice problems for the CSESoc Education COMP2521 problem solving workshop, wr
 
 ```
 <topic>/       starter code (fill in the TODO)
+tests/<topic>/ test cases used by ./autotest
 sol/<topic>/   solutions
 adt/           shared ADTs (Stack, Queue, Heap, PriorityQueue, HashTable, Graph, List, Bst)
 ```
@@ -17,7 +18,7 @@ adt/           shared ADTs (Stack, Queue, Heap, PriorityQueue, HashTable, Graph,
 | `linked_list` | isSorted | copyAlternatingRange | deleteMid |
 | `bst` | countLeaves | treeDiameter | structuralDifference |
 | `graph` | reachDarlingSquare | findHappyComponent | celebrity |
-| `hashmap` | geeseInATrenchcoat | isomorphicStrings | longestSubstring |
+| `hashmap` | mollyTea | isomorphicStrings | longestSubstring |
 | `bonus` | | | projectSelection |
 
 ## Setup
@@ -33,14 +34,14 @@ adt/           shared ADTs (Stack, Queue, Heap, PriorityQueue, HashTable, Graph,
    ```
    Choose a folder, then click **Open** when prompted.
 
-## Running
+## Autotest
 
-Open a terminal in VS Code (``Ctrl + ` ``), `cd` into a topic folder, then:
+Open a terminal in VS Code (``Ctrl + ` ``) at the repo root, then:
 
 ```sh
-gcc -Wall -std=c11 is_sorted.c ../adt/*.c -o is_sorted && ./is_sorted
+./autotest is_sorted    # test one problem
+./autotest              # test every problem
 ```
 
-From `sol/<topic>/`, use `../../adt/*.c` instead. Each file prints `PASS`/`FAIL` for its test cases.
-
-To test the ADTs themselves: `cd adt && make test`
+It compiles your file, runs the test cases, and prints how many passed (e.g. `Result: 5/6 passed`).
+From inside a topic folder, use `../autotest is_sorted`.
