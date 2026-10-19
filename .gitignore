@@ -1,0 +1,15 @@
+.DS_Store
+
+# Executables built by `make` in topic folders (files without an extension)
+/*/*
+!/*/*/
+!/*/*.*
+!/*/Makefile
+!/*/autotest
+
+# ADT self-test executables
+/adt/tests/*
+!/adt/tests/*.c
+
+# macOS debug symbols from `-g` (must stay last so the rules above can't re-include it)
+*.dSYM/

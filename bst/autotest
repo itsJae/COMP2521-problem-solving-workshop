@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#
+# Usage (from this folder):
+#   ./autotest <problem>    run one problem
+#   ./autotest              run every problem in this folder
+
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ $# -eq 0 ]; then
+    exec "$dir/../autotest" "$(basename "$dir")"
+fi
+exec "$dir/../autotest" "$@"

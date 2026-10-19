@@ -3,6 +3,7 @@
  * https://www.geeksforgeeks.org/problems/the-celebrity-problem/1
  */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include "../adt/Stack.h"
 

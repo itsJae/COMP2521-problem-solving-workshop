@@ -3,6 +3,7 @@
 # Usage:
 #   ./autotest              run every problem
 #   ./autotest is_sorted    run one problem
+#   ./autotest linked_list  run every problem in a topic
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TOPICS="linked_list bst graph hashmap stack_queue bonus"
@@ -46,13 +47,13 @@ run_problem() {
         cat "$TMP/errors"
         local output
         local status
-        output="$(perl -e 'alarm shift; exec @ARGV' "$TIME_LIMIT" "$TMP/$name" 2>&1)"
+        output="$(AUTOTEST=1 perl -e 'alarm shift; exec @ARGV' "$TIME_LIMIT" "$TMP/$name" 2>&1)"
         status=$?
         [ -n "$output" ] && echo "$output"
-        passed="$(grep -c '^PASS' <<< "$output")"
+        passed="$(grep -cE 'PASS .*-> got' <<< "$output")"
 
         if [ "$status" -eq 142 ]; then
-            echo "Timed out after ${TIME_LIMIT}s (infinite loop?)"
+            echo "Timed out after ${TIME_LIMIT}s (infinite loop or too slow?)"
         elif [ "$status" -eq 139 ]; then
             echo "Crashed: segmentation fault"
         elif [ "$status" -eq 134 ]; then
@@ -68,29 +69,37 @@ run_problem() {
     total_tests=$((total_tests + tests))
 }
 
-if [ $# -eq 0 ]; then
-    for file in "${FILES[@]}"; do
-        run_problem "$file"
-    done
-    echo "Total: $total_passed/$total_tests passed"
-else
-    name="$(basename "${1%.c}")"
-    file=""
-    for candidate in "${FILES[@]}"; do
-        if [ "$(basename "$candidate" .c)" = "$name" ]; then
-            file="$candidate"
-        fi
-    done
-
-    if [ -z "$file" ]; then
-        echo "Unknown problem: $1"
-        echo "Available problems:"
+selected=("${FILES[@]}")
+single=false
+if [ $# -gt 0 ]; then
+    target="$(basename "${1%.c}")"
+    if [[ " $TOPICS " == *" $target "* ]]; then
+        selected=("$ROOT/$target"/*.c)
+    else
+        single=true
+        selected=()
         for candidate in "${FILES[@]}"; do
-            echo "  $(basename "$candidate" .c)"
+            if [ "$(basename "$candidate" .c)" = "$target" ]; then
+                selected=("$candidate")
+            fi
         done
-        exit 1
+
+        if [ ${#selected[@]} -eq 0 ]; then
+            echo "Unknown problem: $1"
+            echo "Available problems:"
+            for candidate in "${FILES[@]}"; do
+                echo "  $(basename "$candidate" .c)"
+            done
+            exit 1
+        fi
     fi
+fi
+
+for file in "${selected[@]}"; do
     run_problem "$file"
+done
+if [ "$single" = false ]; then
+    echo "Total: $total_passed/$total_tests passed"
 fi
 
 [ "$total_passed" -eq "$total_tests" ]

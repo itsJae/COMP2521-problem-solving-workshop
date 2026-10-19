@@ -2,6 +2,7 @@
  * reachDarlingSquare
  */
 
+#include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include "../adt/Graph.h"

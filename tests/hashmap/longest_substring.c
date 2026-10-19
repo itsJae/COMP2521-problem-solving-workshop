@@ -1,11 +1,14 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 int lengthOfLongestSubstring(char *s);
 
 static void runTest(char *s, int expected) {
     int actual = lengthOfLongestSubstring(s);
-    printf("%-4s lengthOfLongestSubstring(\"%s\") -> got %d, expected %d\n",
-           actual == expected ? "PASS" : "FAIL", s, actual, expected);
+    if (getenv("AUTOTEST") != NULL) {
+        printf("%-4s lengthOfLongestSubstring(\"%s\") -> got %d, expected %d\n",
+               actual == expected ? "PASS" : "FAIL", s, actual, expected);
+    }
 }
 
 int main(void) {

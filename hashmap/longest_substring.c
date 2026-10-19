@@ -3,6 +3,7 @@
  * https://leetcode.com/problems/longest-substring-without-repeating-characters/
  */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include "../adt/HashTable.h"
 #include "../adt/Common.h"

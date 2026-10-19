@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "../../adt/Graph.h"
 
 bool reachDarlingSquare(Graph g, int src, int dest);
@@ -16,9 +17,11 @@ static void runTest(char *name, int nV, int edges[][2], int nEdges,
                     int src, int dest, bool expected) {
     Graph g = buildGraph(nV, edges, nEdges);
     bool actual = reachDarlingSquare(g, src, dest);
-    printf("%-4s %-10s -> got %s, expected %s\n",
-           actual == expected ? "PASS" : "FAIL", name,
-           actual ? "true" : "false", expected ? "true" : "false");
+    if (getenv("AUTOTEST") != NULL) {
+        printf("%-4s %-10s -> got %s, expected %s\n",
+               actual == expected ? "PASS" : "FAIL", name,
+               actual ? "true" : "false", expected ? "true" : "false");
+    }
     GraphFree(g);
 }
 

@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include "../../adt/HashTable.h"
 #include "../../adt/Common.h"

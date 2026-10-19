@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 bool mollyTea(int prices[], int n, int k, int *i, int *j);
 
@@ -9,9 +10,11 @@ static void runTest(char *name, int prices[], int n, int k, bool expected) {
     bool found = mollyTea(prices, n, k, &i, &j);
     bool valid = !found || (i >= 0 && i < n && j >= 0 && j < n && i != j &&
                             prices[i] + prices[j] == k);
-    printf("%-4s %-10s -> got %s (%d, %d), expected %s\n",
-           found == expected && valid ? "PASS" : "FAIL", name,
-           found ? "true" : "false", i, j, expected ? "true" : "false");
+    if (getenv("AUTOTEST") != NULL) {
+        printf("%-4s %-10s -> got %s (%d, %d), expected %s\n",
+               found == expected && valid ? "PASS" : "FAIL", name,
+               found ? "true" : "false", i, j, expected ? "true" : "false");
+    }
 }
 
 int main(void) {

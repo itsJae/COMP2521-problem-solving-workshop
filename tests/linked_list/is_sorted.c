@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "../../adt/List.h"
 
 bool isSorted(struct node *list);
@@ -7,9 +8,11 @@ bool isSorted(struct node *list);
 static void runTest(char *name, int values[], int size, bool expected) {
     struct node *list = listFromArray(values, size);
     bool actual = isSorted(list);
-    printf("%-4s %-10s -> got %s, expected %s\n",
-           actual == expected ? "PASS" : "FAIL", name,
-           actual ? "true" : "false", expected ? "true" : "false");
+    if (getenv("AUTOTEST") != NULL) {
+        printf("%-4s %-10s -> got %s, expected %s\n",
+               actual == expected ? "PASS" : "FAIL", name,
+               actual ? "true" : "false", expected ? "true" : "false");
+    }
     listFree(list);
 }
 

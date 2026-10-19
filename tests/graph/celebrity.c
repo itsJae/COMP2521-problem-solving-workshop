@@ -1,11 +1,14 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 int celebrity(int n, int mat[n][n]);
 
 static void runTest(char *name, int n, int mat[n][n], int expected) {
     int actual = celebrity(n, mat);
-    printf("%-4s %-10s -> got %d, expected %d\n",
-           actual == expected ? "PASS" : "FAIL", name, actual, expected);
+    if (getenv("AUTOTEST") != NULL) {
+        printf("%-4s %-10s -> got %d, expected %d\n",
+               actual == expected ? "PASS" : "FAIL", name, actual, expected);
+    }
 }
 
 int main(void) {

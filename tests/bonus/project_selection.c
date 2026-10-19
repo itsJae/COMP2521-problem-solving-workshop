@@ -1,11 +1,14 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 int projectSelection(int R[], int W[], int n, int s, int k);
 
 static void runTest(char *name, int R[], int W[], int n, int s, int k, int expected) {
     int actual = projectSelection(R, W, n, s, k);
-    printf("%-4s %-10s -> got %d, expected %d\n",
-           actual == expected ? "PASS" : "FAIL", name, actual, expected);
+    if (getenv("AUTOTEST") != NULL) {
+        printf("%-4s %-10s -> got %d, expected %d\n",
+               actual == expected ? "PASS" : "FAIL", name, actual, expected);
+    }
 }
 
 int main(void) {

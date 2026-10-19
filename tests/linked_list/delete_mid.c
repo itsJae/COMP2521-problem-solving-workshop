@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "../../adt/List.h"
 
 struct node *deleteMid(struct node *list);
@@ -6,10 +7,12 @@ struct node *deleteMid(struct node *list);
 static void runTest(char *name, int values[], int size,
                     int expected[], int expectedSize) {
     struct node *result = deleteMid(listFromArray(values, size));
-    printf("%-4s %-10s -> got ",
-           listEquals(result, expected, expectedSize) ? "PASS" : "FAIL", name);
-    listPrint(result);
-    printf("\n");
+    if (getenv("AUTOTEST") != NULL) {
+        printf("%-4s %-10s -> got ",
+               listEquals(result, expected, expectedSize) ? "PASS" : "FAIL", name);
+        listPrint(result);
+        printf("\n");
+    }
     listFree(result);
 }
 

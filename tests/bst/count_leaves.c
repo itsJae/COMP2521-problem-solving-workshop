@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "../../adt/Bst.h"
 
 int countLeaves(struct node *tree);
@@ -14,8 +15,10 @@ static struct node *buildTree(int values[], int size) {
 static void runTest(char *name, int values[], int size, int expected) {
     struct node *tree = buildTree(values, size);
     int actual = countLeaves(tree);
-    printf("%-4s %-10s -> got %d, expected %d\n",
-           actual == expected ? "PASS" : "FAIL", name, actual, expected);
+    if (getenv("AUTOTEST") != NULL) {
+        printf("%-4s %-10s -> got %d, expected %d\n",
+               actual == expected ? "PASS" : "FAIL", name, actual, expected);
+    }
     bstFree(tree);
 }
 

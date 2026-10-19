@@ -2,6 +2,7 @@
  * countLeaves
  */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include "../adt/Bst.h"
 

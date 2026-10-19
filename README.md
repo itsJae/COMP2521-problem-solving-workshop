@@ -19,6 +19,7 @@ adt/           shared ADTs (Stack, Queue, Heap, PriorityQueue, HashTable, Graph,
 | `bst` | countLeaves | treeDiameter | structuralDifference |
 | `graph` | reachDarlingSquare | findHappyComponent | celebrity |
 | `hashmap` | mollyTea | isomorphicStrings | longestSubstring |
+| `stack_queue` | crunchPringles | reverseQueue | dailyTemperatures |
 | `bonus` | | | projectSelection |
 
 ## Setup
@@ -36,12 +37,22 @@ adt/           shared ADTs (Stack, Queue, Heap, PriorityQueue, HashTable, Graph,
 
 ## Autotest
 
-Open a terminal in VS Code (``Ctrl + ` ``) at the repo root, then:
+Open a terminal in VS Code (``Ctrl + ` ``), `cd` into a topic folder, then:
 
 ```sh
+cd linked_list
 ./autotest is_sorted    # test one problem
-./autotest              # test every problem
+./autotest              # test every problem in this folder
 ```
 
 It compiles your file, runs the test cases, and prints how many passed (e.g. `Result: 5/6 passed`).
-From inside a topic folder, use `../autotest is_sorted`.
+Running `./autotest` from the repo root tests every problem.
+
+To debug with your own `printf`s, build with `make` inside a topic folder and run the problem directly.
+This calls your function on the test inputs but only shows your own output, not the test results:
+
+```sh
+cd linked_list
+make
+./is_sorted
+```

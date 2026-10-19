@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "../../adt/Bst.h"
 
 int structuralDifference(struct node *t1, struct node *t2);
@@ -16,8 +17,10 @@ static void runTest(char *name, int values1[], int size1,
     struct node *t1 = buildTree(values1, size1);
     struct node *t2 = buildTree(values2, size2);
     int actual = structuralDifference(t1, t2);
-    printf("%-4s %-10s -> got %d, expected %d\n",
-           actual == expected ? "PASS" : "FAIL", name, actual, expected);
+    if (getenv("AUTOTEST") != NULL) {
+        printf("%-4s %-10s -> got %d, expected %d\n",
+               actual == expected ? "PASS" : "FAIL", name, actual, expected);
+    }
     bstFree(t1);
     bstFree(t2);
 }
