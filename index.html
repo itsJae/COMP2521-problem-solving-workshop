@@ -1,0 +1,1233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>COMP2521 Problem Solving Workshop</title>
+<style>
+    :root {
+        --bg: #ffffff;
+        --fg: #000000;
+        --muted: #777777;
+        --border: #dddddd;
+        --code-bg: #f5f5f5;
+        --code-border: #cccccc;
+        --code-fg: #333333;
+        --inline-fg: #c7254e;
+        --inline-bg: #f9f2f4;
+        --bar: #42a097;
+        --bar-fg: #ffffff;
+        --note-bg: #fcf8e3;
+        --note-border: #faebcc;
+        --note-fg: #8a6d3b;
+        --kw: #22863a;
+        --type: #0b2fd6;
+        --fn: #c7254e;
+        --link: #0b57d0;
+        --link-hover: #083f99;
+    }
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --bg: #16181b;
+            --fg: #e6e6e6;
+            --muted: #9aa0a6;
+            --border: #3a3f44;
+            --code-bg: #202327;
+            --code-border: #3a3f44;
+            --code-fg: #e0e0e0;
+            --inline-fg: #ff8fb1;
+            --inline-bg: #2a1f24;
+            --bar: #2f7d75;
+            --bar-fg: #ffffff;
+            --note-bg: #3a3215;
+            --note-border: #6b5a1e;
+            --note-fg: #f3e3a6;
+            --kw: #7ee787;
+            --type: #79a8ff;
+            --fn: #ff8fb1;
+            --link: #8ab4f8;
+            --link-hover: #aecbfa;
+        }
+    }
+
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font: 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    main { max-width: 860px; margin: 0 auto; padding: 24px 16px 64px; }
+    a { color: var(--link); }
+    a:hover, a:focus { color: var(--link-hover); }
+    code, pre { font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 0.85em; }
+    code { color: var(--inline-fg); background: var(--inline-bg); padding: 2px 4px; }
+    pre code, .box code { padding: 0; }
+    h2, h3 { margin: 0; }
+    p { margin: 0.6em 0; }
+    ul, ol { margin: 0.4em 0; padding-left: 2.6em; }
+    li { margin: 0.25em 0; }
+
+    .bar { background: var(--bar); color: var(--bar-fg); text-align: right;
+           padding: 18px 24px; font-size: 1.1em; }
+
+    .cover { text-align: center; margin: 48px 0 32px; }
+    .cover h1 { font-size: 2.4em; font-weight: 400; margin: 0; }
+    .cover .subtitle { font-size: 1.4em; margin: 0.3em 0 1.2em; }
+
+    .note { background: var(--note-bg); border: 1px solid var(--note-border); color: var(--note-fg);
+            padding: 14px 24px; margin: 24px 0; }
+    .note a { color: inherit; }
+
+    .boxhead { display: flex; justify-content: space-between; align-items: center; gap: 12px;
+               border: 1px solid var(--fg); border-left: 8px solid var(--fg);
+               padding: 14px 24px; margin: 32px 0 16px; }
+    .boxhead h2 { font-size: 1.6em; font-weight: 400; }
+    .boxhead.question h2, .boxhead.question .level { font-weight: bold; font-size: 1.6em; }
+    h3 { font-size: 1.6em; font-weight: 400; margin: 1em 0 0.3em; }
+    .qsub { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+    .qsub h3 { font-size: 1.25em; font-weight: bold; margin: 0.4em 0; }
+    .qsub span { color: var(--muted); font-size: 0.85em; }
+    .qsub span a { color: inherit; }
+    .req { font-weight: bold; }
+
+    .level { white-space: nowrap; line-height: 1; }
+    .level i { display: inline-block; width: 0.8em; height: 0.8em; margin-right: 0.25em;
+               border: 0.12em solid currentColor; border-radius: 50%; vertical-align: -0.08em; }
+    .level i.on { background: currentColor; }
+    .legend { display: inline-grid; grid-template-columns: auto auto; gap: 6px 12px; align-items: center; text-align: left; margin-top: 24px; }
+
+    .toc ol { list-style: none; padding: 0; }
+    .toc > ol > li { margin-top: 0.8em; font-weight: bold; }
+    .toc li li { font-weight: normal; padding-left: 1.6em; }
+    .toc .num { display: inline-block; width: 2.6em; }
+    .toc .level { display: inline-block; width: 4em; }
+
+    pre {
+        background: var(--code-bg);
+        border: 1px solid var(--code-border);
+        color: var(--code-fg);
+        padding: 12px 16px;
+        margin: 0.6em 0;
+        overflow-x: auto;
+        line-height: 1.45;
+    }
+    .kw { color: var(--kw); font-weight: bold; }
+    .ty { color: var(--type); font-weight: bold; }
+    .fn { color: var(--fn); }
+    .cm { color: var(--muted); }
+
+    table.files { width: 100%; border-collapse: collapse; margin: 0.6em 0; }
+    table.files th, table.files td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+    table.files th { white-space: nowrap; }
+
+    .sample { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+    .box { border: 1px solid var(--border); display: flex; flex-direction: column; }
+    .box .label { background: var(--code-bg); border-bottom: 1px solid var(--border);
+                  font-weight: bold; font-size: 0.9em; padding: 4px 10px; }
+    .box pre { border: 0; background: none; margin: 0; padding: 8px 10px; }
+    .box .figure { padding: 0 10px 10px; display: flex; justify-content: center; align-items: center;
+                   gap: 18px; flex-wrap: wrap; font-weight: bold; }
+    .explain { font-size: 0.92em; margin: 4px 0 0; }
+    .figure-center { display: flex; justify-content: center; margin: 8px 0; }
+    svg { color: var(--fg); overflow: visible; }
+    svg circle { fill: var(--bg); stroke: currentColor; stroke-width: 2; }
+    svg line { stroke: currentColor; stroke-width: 2; }
+    svg text { fill: currentColor; font: bold 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+               text-anchor: middle; dominant-baseline: central; }
+
+    @media (max-width: 600px) {
+        .sample { grid-template-columns: 1fr; gap: 8px; }
+        .boxhead { padding: 10px 14px; }
+        .boxhead h2, .boxhead.question h2, .boxhead.question .level { font-size: 1.3em; }
+        table.files th { white-space: normal; }
+    }
+    @media print {
+        .problem, .section-break { break-before: page; }
+        .qsub span { display: none; }
+    }
+</style>
+</head>
+<body>
+<main>
+
+<div class="bar">COMP2521 Problem Solving Workshop</div>
+
+<header class="cover">
+    <h1>Problem Solving Workshop</h1>
+    <div class="subtitle">Data Structures and Algorithms</div>
+    <div class="legend">
+        <span class="level"><i class="on"></i><i></i><i></i></span><span>Easy</span>
+        <span class="level"><i class="on"></i><i class="on"></i><i></i></span><span>Medium</span>
+        <span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span><span>Challenging</span>
+    </div>
+</header>
+
+<div class="note">
+    <b>IMPORTANT</b><br>
+    This is a practice workshop run by CSESoc Education. It is not an official COMP2521 resource.
+</div>
+
+<nav class="toc" id="contents">
+    <div class="boxhead"><h2>Contents</h2></div>
+    <ol>
+        <li><a href="#getting-started">Getting Started</a></li>
+        <li><span class="num">1</span>Linked List
+            <ol>
+                <li><span class="num">1.1</span><span class="level"><i class="on"></i><i></i><i></i></span><a href="#is-sorted">Is Sorted</a></li>
+                <li><span class="num">1.2</span><span class="level"><i class="on"></i><i class="on"></i><i></i></span><a href="#copy-alternating-range">Copy Alternating Range</a></li>
+                <li><span class="num">1.3</span><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span><a href="#delete-mid">Delete Mid</a></li>
+            </ol>
+        </li>
+        <li><span class="num">2</span>Binary Search Tree
+            <ol>
+                <li><span class="num">2.1</span><span class="level"><i class="on"></i><i></i><i></i></span><a href="#count-leaves">Count Leaves</a></li>
+                <li><span class="num">2.2</span><span class="level"><i class="on"></i><i class="on"></i><i></i></span><a href="#tree-diameter">Tree Diameter</a></li>
+                <li><span class="num">2.3</span><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span><a href="#structural-difference">Structural Difference</a></li>
+            </ol>
+        </li>
+        <li><span class="num">3</span>Graph Traversal
+            <ol>
+                <li><span class="num">3.1</span><span class="level"><i class="on"></i><i></i><i></i></span><a href="#reach-darling-square">Reach Darling Square</a></li>
+                <li><span class="num">3.2</span><span class="level"><i class="on"></i><i class="on"></i><i></i></span><a href="#find-happy-component">Find Happy Component</a></li>
+                <li><span class="num">3.3</span><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span><a href="#celebrity">Celebrity</a></li>
+            </ol>
+        </li>
+        <li><span class="num">4</span>Hash Table
+            <ol>
+                <li><span class="num">4.1</span><span class="level"><i class="on"></i><i></i><i></i></span><a href="#molly-tea">Molly Tea</a></li>
+                <li><span class="num">4.2</span><span class="level"><i class="on"></i><i class="on"></i><i></i></span><a href="#isomorphic-strings">Isomorphic Strings</a></li>
+                <li><span class="num">4.3</span><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span><a href="#longest-substring">Longest Substring Without Repeating Characters</a></li>
+            </ol>
+        </li>
+        <li><span class="num">5</span>Stack / Queue
+            <ol>
+                <li><span class="num">5.1</span><span class="level"><i class="on"></i><i></i><i></i></span><a href="#crunch-pringles">Crunch Pringles</a></li>
+                <li><span class="num">5.2</span><span class="level"><i class="on"></i><i class="on"></i><i></i></span><a href="#reverse-queue">Reverse Queue</a></li>
+                <li><span class="num">5.3</span><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span><a href="#daily-temperatures">Daily Temperatures</a></li>
+            </ol>
+        </li>
+        <li><span class="num">6</span>Bonus
+            <ol>
+                <li><span class="num">6.1</span><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span><a href="#project-selection">Project Selection</a></li>
+            </ol>
+        </li>
+    </ol>
+</nav>
+
+<section id="getting-started" class="section-break">
+    <div class="boxhead"><h2>Getting Started</h2></div>
+
+    <h3>Setup</h3>
+    <p>Install VS Code, Git and a C compiler (see the <code>README</code> for each OS). Then open the Command Palette in VS Code (<code>Cmd/Ctrl + Shift + P</code>), run <b>Git: Clone</b> and paste:</p>
+    <pre>https://github.com/itsJae/COMP2521-problem-solving-workshop.git</pre>
+
+    <h3>Instructions</h3>
+    <ul>
+        <li>Each problem is a single C function in its topic folder. Fill in the <code>TODO</code>.</li>
+        <li>You may define your own helper functions.</li>
+        <li>You may use any ADT in the <code>adt/</code> folder.</li>
+        <li>If a time complexity is required, it is part of the problem. Some tests are large, so a slower solution may time out.</li>
+        <li>A test fails if your answer is wrong, if your program crashes, or if it takes longer than 5 seconds.</li>
+    </ul>
+
+    <h3>Notation</h3>
+    <p>In the samples, a linked list is written as <code>1 -&gt; 2 -&gt; 3 -&gt; X</code>, where <code>X</code> is <code>NULL</code>. A BST is given by the order in which values are inserted into an empty tree, together with a drawing of the result.</p>
+
+    <div class="note">
+        <b>Reference material:</b> the <a href="https://cgi.cse.unsw.edu.au/~cs2521/26T2/dsa-manual">COMP2521 Data Structures and Algorithms Manual</a>.
+    </div>
+</section>
+
+<!-- ======================================================================= -->
+<section id="is-sorted" class="problem">
+    <div class="boxhead question"><h2>Problem 1.1</h2><span class="level"><i class="on"></i><i></i><i></i></span></div>
+    <div class="qsub"><h3>Is Sorted</h3><span>Linked List · <a href="#contents">Back to contents</a></span></div>
+
+    <h3>Background</h3>
+    <p>The COMP2521 tutors keep every student's lab mark in a linked list. Their marking script only works if the marks are already in order, so before running it they want a quick check.</p>
+
+    <h3>Task</h3>
+    <p>Return <code>true</code> if the values in the list are in non-decreasing order (every value is less than or equal to the next one), otherwise return <code>false</code>.</p>
+    <pre class="c">struct node {
+    int value;
+    struct node *next;
+};
+
+bool isSorted(struct node *list);</pre>
+
+    <p class="req">Required time complexity: <var>O(n)</var></p>
+
+    <h3>Assumptions</h3>
+    <ul>
+        <li>The list may be empty (<code>NULL</code>). An empty list and a list with one node are sorted.</li>
+        <li>You must not use <code>for</code> or <code>while</code> loops. Use recursion instead.</li>
+        <li>Equal neighbouring values are allowed.</li>
+        <li>The list must not be modified.</li>
+    </ul>
+
+    <h3>Samples</h3>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 1</div><pre>1 -> 2 -> 3 -> 4 -> X</pre></div>
+        <div class="box"><div class="label">Sample Output 1</div><pre>true</pre></div>
+    </div>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 2</div><pre>3 -> 1 -> 2 -> 4 -> X</pre></div>
+        <div class="box"><div class="label">Sample Output 2</div><pre>false</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> <code>3</code> is greater than the next value <code>1</code>.</p>
+
+    <h3>Files</h3>
+    <table class="files">
+        <tr><th>linked_list/is_sorted.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
+        <tr><th>tests/linked_list/is_sorted.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
+        <tr><th>linked_list/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
+    </table>
+
+    <h3>Testing</h3>
+    <p>You can test your function using:</p>
+    <pre>$ cd linked_list
+$ ./autotest is_sorted</pre>
+    <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
+    <pre>$ make
+$ ./is_sorted</pre>
+</section>
+
+<section id="copy-alternating-range" class="problem">
+    <div class="boxhead question"><h2>Problem 1.2</h2><span class="level"><i class="on"></i><i class="on"></i><i></i></span></div>
+    <div class="qsub"><h3>Copy Alternating Range</h3><span>Linked List · <a href="#contents">Back to contents</a></span></div>
+
+    <h3>Background</h3>
+    <p>Your playlist is a linked list where each node holds a song's energy level. Tonight you only want songs with energy between <code>lo</code> and <code>hi</code>, and to keep things fresh you skip every second song that qualifies.</p>
+
+    <h3>Task</h3>
+    <p>Considering only the values that lie in the inclusive range <var>[lo, hi]</var>, return a <b>new</b> list containing the 1st, 3rd, 5th, … of them, in their original order.</p>
+    <pre class="c">struct node {
+    int value;
+    struct node *next;
+};
+
+struct node *copyAlternatingRange(struct node *list, int lo, int hi);</pre>
+
+    <p class="req">Required time complexity: <var>O(n)</var></p>
+
+    <h3>Assumptions</h3>
+    <ul>
+        <li><var>lo ≤ hi</var>.</li>
+        <li>The list may be empty. If no value lies in the range, return <code>NULL</code>.</li>
+        <li>The new list must be built from newly allocated nodes. The original list must not be modified.</li>
+    </ul>
+
+    <h3>Samples</h3>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 1</div><pre>8 -> 3 -> 6 -> 2 -> 7 -> 5 -> 9 -> 4 -> X
+lo = 3, hi = 8</pre></div>
+        <div class="box"><div class="label">Sample Output 1</div><pre>8 -> 6 -> 5 -> X</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> The values in <var>[3, 8]</var> are <code>8, 3, 6, 7, 5, 4</code>. The 1st, 3rd and 5th of them are <code>8, 6, 5</code>.</p>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 2</div><pre>10 -> 4 -> 20 -> 6 -> X
+lo = 4, hi = 6</pre></div>
+        <div class="box"><div class="label">Sample Output 2</div><pre>4 -> X</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> Only <code>4</code> and <code>6</code> are in range, and <code>6</code> is the 2nd of them.</p>
+
+    <h3>Files</h3>
+    <table class="files">
+        <tr><th>linked_list/copy_alternating_range.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
+        <tr><th>tests/linked_list/copy_alternating_range.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
+        <tr><th>linked_list/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
+    </table>
+
+    <h3>Testing</h3>
+    <p>You can test your function using:</p>
+    <pre>$ cd linked_list
+$ ./autotest copy_alternating_range</pre>
+    <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
+    <pre>$ make
+$ ./copy_alternating_range</pre>
+</section>
+
+<section id="delete-mid" class="problem">
+    <div class="boxhead question"><h2>Problem 1.3</h2><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span></div>
+    <div class="qsub"><h3>Delete Mid</h3><span>Linked List · <a href="#contents">Back to contents</a></span></div>
+
+    <h3>Background</h3>
+    <p>The waiting line for the CSESoc pubcrawl at Sanctuary Hotel is getting too long. Whoever is standing in the exact middle has been chosen to leave and grab more snacks.</p>
+
+    <h3>Task</h3>
+    <p>Delete the middle node of the list and return the head of the updated list. For a list of length <var>n</var>, the middle node is the one at index <var>⌊n/2⌋</var>, counting from 0.</p>
+    <pre class="c">struct node {
+    int value;
+    struct node *next;
+};
+
+struct node *deleteMid(struct node *list);</pre>
+
+    <p class="req">Required time complexity: <var>O(n)</var></p>
+
+    <h3>Assumptions</h3>
+    <ul>
+        <li>The list is not empty (<var>n ≥ 1</var>). If it has one node, the result is <code>NULL</code>.</li>
+        <li>The deleted node must be freed.</li>
+    </ul>
+
+    <h3>Samples</h3>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 1</div><pre>1 -> 3 -> 5 -> 7 -> 9 -> X</pre></div>
+        <div class="box"><div class="label">Sample Output 1</div><pre>1 -> 3 -> 7 -> 9 -> X</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> <var>n = 5</var>, so the node at index 2 (<code>5</code>) is deleted.</p>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 2</div><pre>1 -> 2 -> 3 -> 4 -> X</pre></div>
+        <div class="box"><div class="label">Sample Output 2</div><pre>1 -> 2 -> 4 -> X</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> <var>n = 4</var>, so the node at index 2 (<code>3</code>) is deleted.</p>
+
+    <h3>Files</h3>
+    <table class="files">
+        <tr><th>linked_list/delete_mid.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
+        <tr><th>tests/linked_list/delete_mid.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
+        <tr><th>linked_list/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
+    </table>
+
+    <h3>Testing</h3>
+    <p>You can test your function using:</p>
+    <pre>$ cd linked_list
+$ ./autotest delete_mid</pre>
+    <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
+    <pre>$ make
+$ ./delete_mid</pre>
+</section>
+
+<!-- ======================================================================= -->
+<section id="count-leaves" class="problem">
+    <div class="boxhead question"><h2>Problem 2.1</h2><span class="level"><i class="on"></i><i></i><i></i></span></div>
+    <div class="qsub"><h3>Count Leaves</h3><span>Binary Search Tree · <a href="#contents">Back to contents</a></span></div>
+
+    <h3>Background</h3>
+    <p>Autumn has arrived on the library lawn, and the BST growing there is about to drop its leaves. Before the gardeners show up, they want to know how many leaves to expect.</p>
+
+    <h3>Task</h3>
+    <p>Return the number of leaf nodes (nodes with no children) in the given BST.</p>
+    <pre class="c">struct node {
+    int value;
+    struct node *left;
+    struct node *right;
+};
+
+int countLeaves(struct node *tree);</pre>
+
+    <p class="req">Required time complexity: <var>O(n)</var></p>
+
+    <h3>Assumptions</h3>
+    <ul>
+        <li>The tree may be empty, in which case there are 0 leaves.</li>
+        <li>A tree with a single node has 1 leaf.</li>
+    </ul>
+
+    <h3>Samples</h3>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 1</div><pre>insert 4 2 6 1 3 5</pre><div class="figure"><span class="bst" data-insert="4 2 6 1 3 5"></span></div></div>
+        <div class="box"><div class="label">Sample Output 1</div><pre>3</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> The leaves are <code>1</code>, <code>3</code> and <code>5</code>.</p>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 2</div><pre>insert 1 2 3 4</pre><div class="figure"><span class="bst" data-insert="1 2 3 4"></span></div></div>
+        <div class="box"><div class="label">Sample Output 2</div><pre>1</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> The tree is a single path, so <code>4</code> is the only leaf.</p>
+
+    <h3>Files</h3>
+    <table class="files">
+        <tr><th>bst/count_leaves.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
+        <tr><th>tests/bst/count_leaves.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
+        <tr><th>bst/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
+    </table>
+
+    <h3>Testing</h3>
+    <p>You can test your function using:</p>
+    <pre>$ cd bst
+$ ./autotest count_leaves</pre>
+    <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
+    <pre>$ make
+$ ./count_leaves</pre>
+</section>
+
+<section id="tree-diameter" class="problem">
+    <div class="boxhead question"><h2>Problem 2.2</h2><span class="level"><i class="on"></i><i class="on"></i><i></i></span></div>
+    <div class="qsub"><h3>Tree Diameter</h3><span>Binary Search Tree · <a href="#contents">Back to contents</a></span></div>
+
+    <h3>Background</h3>
+    <p>A squirrel lives in the library BST. It wants to plan the longest possible trip between two nodes without visiting any node twice.</p>
+
+    <h3>Task</h3>
+    <p>Return the diameter of the tree: the number of <b>edges</b> on the longest path between any two nodes.</p>
+    <pre class="c">struct node {
+    int value;
+    struct node *left;
+    struct node *right;
+};
+
+int treeDiameter(struct node *tree);</pre>
+
+    <p class="req">Required time complexity: <var>O(n)</var></p>
+
+    <h3>Assumptions</h3>
+    <ul>
+        <li>The tree may be empty. An empty tree and a tree with one node both have diameter 0.</li>
+        <li>The longest path does not have to pass through the root.</li>
+    </ul>
+
+    <h3>Samples</h3>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 1</div><pre>insert 5 4 2 1 3 6 7</pre><div class="figure"><span class="bst" data-insert="5 4 2 1 3 6 7"></span></div></div>
+        <div class="box"><div class="label">Sample Output 1</div><pre>5</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> The path <code>1-2-4-5-6-7</code> has 5 edges and goes through the root.</p>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 2</div><pre>insert 7 3 2 1 6 4 5 8</pre><div class="figure"><span class="bst" data-insert="7 3 2 1 6 4 5 8"></span></div></div>
+        <div class="box"><div class="label">Sample Output 2</div><pre>5</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> The path <code>1-2-3-6-4-5</code> has 5 edges and does not go through the root.</p>
+
+    <h3>Files</h3>
+    <table class="files">
+        <tr><th>bst/tree_diameter.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
+        <tr><th>tests/bst/tree_diameter.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
+        <tr><th>bst/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
+    </table>
+
+    <h3>Testing</h3>
+    <p>You can test your function using:</p>
+    <pre>$ cd bst
+$ ./autotest tree_diameter</pre>
+    <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
+    <pre>$ make
+$ ./tree_diameter</pre>
+</section>
+
+<section id="structural-difference" class="problem">
+    <div class="boxhead question"><h2>Problem 2.3</h2><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span></div>
+    <div class="qsub"><h3>Structural Difference</h3><span>Binary Search Tree · <a href="#contents">Back to contents</a></span></div>
+
+    <h3>Background</h3>
+    <p>Two students submitted BSTs for the same lab exercise. Their tutor plays spot the difference to measure how far apart the two trees are.</p>
+
+    <h3>Task</h3>
+    <p>For every position that occurs in at least one of the two trees:</p>
+    <ul>
+        <li>add 0 if both trees have a node there and the values are equal,</li>
+        <li>add 1 if both trees have a node there but the values are different,</li>
+        <li>add 2 if exactly one tree has a node there.</li>
+    </ul>
+    <p>Return the total.</p>
+    <pre class="c">int structuralDifference(struct node *t1, struct node *t2);</pre>
+
+    <p class="req">Required time complexity: <var>O(n + m)</var>, where <var>n</var> and <var>m</var> are the numbers of nodes in the two trees</p>
+
+    <h3>Assumptions</h3>
+    <ul>
+        <li>A position is the path of left/right moves from the root, not a value.</li>
+        <li>Either tree, or both, may be empty.</li>
+        <li>If one tree has a whole subtree where the other tree has no node, every node in that subtree adds 2.</li>
+    </ul>
+
+    <h3>Samples</h3>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 1</div><pre>t1: insert 8 3 10 14
+t2: insert 8 4 10 1</pre><div class="figure"><span class="bst" data-insert="8 3 10 14"></span>vs<span class="bst" data-insert="8 4 10 1"></span></div></div>
+        <div class="box"><div class="label">Sample Output 1</div><pre>5</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> Root <code>8 = 8</code> adds 0, <code>3</code> vs <code>4</code> adds 1, <code>1</code> and <code>14</code> each exist in only one tree and add 2.</p>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 2</div><pre>t1: (empty)
+t2: insert 2 1 3</pre><div class="figure"><span class="bst" data-insert=""></span>vs<span class="bst" data-insert="2 1 3"></span></div></div>
+        <div class="box"><div class="label">Sample Output 2</div><pre>6</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> <code>t1</code> is empty, so all 3 nodes of <code>t2</code> add 2 each.</p>
+
+    <h3>Files</h3>
+    <table class="files">
+        <tr><th>bst/structural_difference.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
+        <tr><th>tests/bst/structural_difference.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
+        <tr><th>bst/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
+    </table>
+
+    <h3>Testing</h3>
+    <p>You can test your function using:</p>
+    <pre>$ cd bst
+$ ./autotest structural_difference</pre>
+    <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
+    <pre>$ make
+$ ./structural_difference</pre>
+</section>
+
+<!-- ======================================================================= -->
+<section id="reach-darling-square" class="problem">
+    <div class="boxhead question"><h2>Problem 3.1</h2><span class="level"><i class="on"></i><i></i><i></i></span></div>
+    <div class="qsub"><h3>Reach Darling Square</h3><span>Graph Traversal · <a href="#contents">Back to contents</a></span></div>
+
+    <h3>Background</h3>
+    <p>You and your friends are meeting for dinner at Darling Square. The city is a graph: each vertex is a location and each edge is a direct route between two locations. Before you leave, you want to know whether you can get there at all.</p>
+
+    <h3>Task</h3>
+    <p>Return <code>true</code> if <code>dest</code> (the darling square) can be reached from <code>src</code>, otherwise return <code>false</code>.</p>
+    <pre class="c">bool reachDarlingSquare(Graph g, int src, int dest);
+
+// Useful ADT functions
+int GraphNumVertices(Graph g);
+int GraphDegree(Graph g, int v);
+int GraphNeighbour(Graph g, int v, int i);   // 0 &lt;= i &lt; GraphDegree(g, v)
+
+Queue QueueNew(void);
+void QueueEnqueue(Queue q, void *item);
+void *QueueDequeue(Queue q);
+bool QueueIsEmpty(Queue q);
+void QueueFree(Queue q, void (*freeItem)(void *item));</pre>
+
+    <p class="req">Required time complexity: <var>O(V + E)</var></p>
+
+    <h3>Assumptions</h3>
+    <ul>
+        <li>The graph is undirected and may be disconnected. Vertices are numbered 0 to <var>V − 1</var>.</li>
+        <li><var>0 ≤ src, dest &lt; V</var>. If <var>src = dest</var>, the answer is <code>true</code>.</li>
+    </ul>
+
+    <h3>Samples</h3>
+    <p>Both samples use this graph:</p>
+    <div class="figure-center"><span class="sample-graph"></span></div>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 1</div><pre>V = 6
+edges: 1-2 2-0 0-3 4-5
+src = 1, dest = 3</pre></div>
+        <div class="box"><div class="label">Sample Output 1</div><pre>true</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> <code>1 - 2 - 0 - 3</code> is a path from 1 to 3.</p>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 2</div><pre>V = 6
+edges: 1-2 2-0 0-3 4-5
+src = 1, dest = 5</pre></div>
+        <div class="box"><div class="label">Sample Output 2</div><pre>false</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> Vertex 5 is in a different component from vertex 1.</p>
+
+    <h3>Files</h3>
+    <table class="files">
+        <tr><th>graph/reach_darling_square.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
+        <tr><th>tests/graph/reach_darling_square.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
+        <tr><th>graph/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
+    </table>
+
+    <h3>Testing</h3>
+    <p>You can test your function using:</p>
+    <pre>$ cd graph
+$ ./autotest reach_darling_square</pre>
+    <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
+    <pre>$ make
+$ ./reach_darling_square</pre>
+</section>
+
+<section id="find-happy-component" class="problem">
+    <div class="boxhead question"><h2>Problem 3.2</h2><span class="level"><i class="on"></i><i class="on"></i><i></i></span></div>
+    <div class="qsub"><h3>Find Happy Component</h3><span>Graph Traversal · <a href="#contents">Back to contents</a></span></div>
+
+    <h3>Background</h3>
+    <p>At the end-of-term party, people cluster into friend groups: two people are in the same group if they are connected by a chain of friendships. A group is only happy if it is big enough.</p>
+
+    <h3>Task</h3>
+    <p>A connected component is <em>happy</em> if and only if it has at least <var>k</var> vertices. Return how many components of the graph are happy.</p>
+    <pre class="c">int findHappyComponent(Graph g, int k);
+
+// Useful ADT functions
+int GraphNumVertices(Graph g);
+int GraphDegree(Graph g, int v);
+int GraphNeighbour(Graph g, int v, int i);   // 0 &lt;= i &lt; GraphDegree(g, v)
+
+Stack StackNew(void);
+void StackPush(Stack s, void *item);
+void *StackPop(Stack s);
+bool StackIsEmpty(Stack s);
+void StackFree(Stack s, void (*freeItem)(void *item));</pre>
+
+    <p class="req">Required time complexity: <var>O(V + E)</var></p>
+
+    <h3>Assumptions</h3>
+    <ul>
+        <li>The graph is undirected. A vertex with no edges is a component of size 1.</li>
+        <li><var>k ≥ 1</var>.</li>
+    </ul>
+
+    <h3>Samples</h3>
+    <p>Both samples use this graph:</p>
+    <div class="figure-center"><span class="sample-graph"></span></div>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 1</div><pre>V = 6
+edges: 1-2 2-0 0-3 4-5
+k = 3</pre></div>
+        <div class="box"><div class="label">Sample Output 1</div><pre>1</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> The components have sizes 4 and 2. Only the first has at least 3 vertices.</p>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 2</div><pre>V = 6
+edges: 1-2 2-0 0-3 4-5
+k = 2</pre></div>
+        <div class="box"><div class="label">Sample Output 2</div><pre>2</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> Both components have at least 2 vertices.</p>
+
+    <h3>Files</h3>
+    <table class="files">
+        <tr><th>graph/find_happy_component.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
+        <tr><th>tests/graph/find_happy_component.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
+        <tr><th>graph/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
+    </table>
+
+    <h3>Testing</h3>
+    <p>You can test your function using:</p>
+    <pre>$ cd graph
+$ ./autotest find_happy_component</pre>
+    <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
+    <pre>$ make
+$ ./find_happy_component</pre>
+</section>
+
+<section id="celebrity" class="problem">
+    <div class="boxhead question"><h2>Problem 3.3</h2><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span></div>
+    <div class="qsub"><h3>Celebrity</h3><span>Graph Traversal · <a href="#contents">Back to contents</a></span></div>
+
+    <h3>Background</h3>
+    <p>Rumour has it that a celebrity has sneaked into the party. Everyone knows the celebrity, but the celebrity does not know anyone. You may only ask questions of the form “does person <var>i</var> know person <var>j</var>?”.
+    Based on <a href="https://www.geeksforgeeks.org/problems/the-celebrity-problem/1">The Celebrity Problem</a>.</p>
+
+    <h3>Task</h3>
+    <p>There are <var>n</var> people at the party, and <code>mat[i][j] == 1</code> if person <var>i</var> knows person <var>j</var>. A <em>celebrity</em> is known by everyone else but knows no one else. Return the index of the celebrity, or −1 if there is none.</p>
+    <pre class="c">int celebrity(int n, int mat[n][n]);</pre>
+
+    <p class="req">Required time complexity: <var>O(n)</var></p>
+
+    <h3>Assumptions</h3>
+    <ul>
+        <li><var>n ≥ 1</var>. A party with one person has that person as the celebrity.</li>
+        <li><code>mat[i][i]</code> may be 0 or 1 and should be ignored.</li>
+        <li>Reading the whole matrix takes <var>O(n²)</var>, so you must skip most of it. Hint: each question rules out one person.</li>
+    </ul>
+
+    <h3>Samples</h3>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 1</div><pre>n = 3
+mat:
+0 1 0
+0 0 0
+0 1 0</pre></div>
+        <div class="box"><div class="label">Sample Output 1</div><pre>1</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> Everyone knows person 1, and person 1 knows no one.</p>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 2</div><pre>n = 2
+mat:
+0 1
+1 0</pre></div>
+        <div class="box"><div class="label">Sample Output 2</div><pre>-1</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> Persons 0 and 1 know each other, so neither is a celebrity.</p>
+
+    <h3>Files</h3>
+    <table class="files">
+        <tr><th>graph/celebrity.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
+        <tr><th>tests/graph/celebrity.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
+        <tr><th>graph/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
+    </table>
+
+    <h3>Testing</h3>
+    <p>You can test your function using:</p>
+    <pre>$ cd graph
+$ ./autotest celebrity</pre>
+    <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
+    <pre>$ make
+$ ./celebrity</pre>
+</section>
+
+<!-- ======================================================================= -->
+<section id="molly-tea" class="problem">
+    <div class="boxhead question"><h2>Problem 4.1</h2><span class="level"><i class="on"></i><i></i><i></i></span></div>
+    <div class="qsub"><h3>Molly Tea</h3><span>Hash Table · <a href="#contents">Back to contents</a></span></div>
+
+    <h3>Background</h3>
+    <p>James is a poor uni student on a first date with Julia. He takes her to Molly Tea, opens his wallet, and finds exactly <var>k</var> dollars. He wants to buy two drinks that add up to exactly <var>k</var> dollars so he can spend every last dollar to impress her. Julia gets impatient if James takes too long.</p>
+
+    <h3>Task</h3>
+    <p>Given the drink prices, find two different drinks whose prices add up to exactly <var>k</var>. If they exist, store their indices in <code>*i</code> and <code>*j</code> and return <code>true</code>. Otherwise return <code>false</code>.</p>
+    <pre class="c">bool mollyTea(int prices[], int n, int k, int *i, int *j);
+
+// Useful ADT functions (see Common.h for HashInt and EqualsInt)
+HashTable HashTableNew(HashFn hash, EqualsFn equals);
+void HashTablePut(HashTable t, void *key, void *value);
+void *HashTableGet(HashTable t, void *key);   // NULL if absent
+void HashTableFree(HashTable t, void (*freeKey)(void *key),
+                   void (*freeValue)(void *value));</pre>
+
+    <p class="req">Required time complexity: <var>O(n)</var> on average</p>
+
+    <h3>Assumptions</h3>
+    <ul>
+        <li><var>n ≥ 0</var>. Two different drinks may have the same price, but one drink cannot be bought twice.</li>
+        <li>If several pairs work, any one of them is accepted.</li>
+    </ul>
+
+    <h3>Samples</h3>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 1</div><pre>prices = [2, 7, 11, 15]
+k = 9</pre></div>
+        <div class="box"><div class="label">Sample Output 1</div><pre>true
+i = 0, j = 1</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> 2 + 7 = 9.</p>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 2</div><pre>prices = [3, 4]
+k = 6</pre></div>
+        <div class="box"><div class="label">Sample Output 2</div><pre>false</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> 3 + 3 = 6, but there is only one drink that costs 3.</p>
+
+    <h3>Files</h3>
+    <table class="files">
+        <tr><th>hashmap/molly_tea.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
+        <tr><th>tests/hashmap/molly_tea.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
+        <tr><th>hashmap/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
+    </table>
+
+    <h3>Testing</h3>
+    <p>You can test your function using:</p>
+    <pre>$ cd hashmap
+$ ./autotest molly_tea</pre>
+    <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
+    <pre>$ make
+$ ./molly_tea</pre>
+</section>
+
+<section id="isomorphic-strings" class="problem">
+    <div class="boxhead question"><h2>Problem 4.2</h2><span class="level"><i class="on"></i><i class="on"></i><i></i></span></div>
+    <div class="qsub"><h3>Isomorphic Strings</h3><span>Hash Table · <a href="#contents">Back to contents</a></span></div>
+
+    <h3>Background</h3>
+    <p>Your friend sends you a secret message <code>t</code> and claims it is the word <code>s</code> encrypted with a substitution cipher, where each letter is always swapped for the same letter. Before you start decoding, check whether that is even possible.
+    Based on <a href="https://leetcode.com/problems/isomorphic-strings/">LeetCode 205</a>.</p>
+
+    <h3>Task</h3>
+    <p>Two strings <var>s</var> and <var>t</var> are isomorphic if the characters in <var>s</var> can be replaced to get <var>t</var>, where every occurrence of a character is replaced with the same character, and no two different characters map to the same character. Return <code>true</code> if <var>s</var> and <var>t</var> are isomorphic.</p>
+    <pre class="c">bool isIsomorphic(char *s, char *t);</pre>
+
+    <p class="req">Required time complexity: <var>O(n)</var> on average</p>
+
+    <h3>Assumptions</h3>
+    <ul>
+        <li><var>s</var> and <var>t</var> have the same length <var>n</var>, which may be 0. Two empty strings are isomorphic.</li>
+        <li>The strings contain ASCII characters. A character may map to itself.</li>
+    </ul>
+
+    <h3>Samples</h3>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 1</div><pre>s = "egg"
+t = "add"</pre></div>
+        <div class="box"><div class="label">Sample Output 1</div><pre>true</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> <code>e</code> maps to <code>a</code> and <code>g</code> maps to <code>d</code>.</p>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 2</div><pre>s = "badc"
+t = "baba"</pre></div>
+        <div class="box"><div class="label">Sample Output 2</div><pre>false</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> Both <code>b</code> and <code>d</code> would have to map to <code>b</code>.</p>
+
+    <h3>Files</h3>
+    <table class="files">
+        <tr><th>hashmap/isomorphic_strings.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
+        <tr><th>tests/hashmap/isomorphic_strings.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
+        <tr><th>hashmap/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
+    </table>
+
+    <h3>Testing</h3>
+    <p>You can test your function using:</p>
+    <pre>$ cd hashmap
+$ ./autotest isomorphic_strings</pre>
+    <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
+    <pre>$ make
+$ ./isomorphic_strings</pre>
+</section>
+
+<section id="longest-substring" class="problem">
+    <div class="boxhead question"><h2>Problem 4.3</h2><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span></div>
+    <div class="qsub"><h3>Longest Substring Without Repeating Characters</h3><span>Hash Table · <a href="#contents">Back to contents</a></span></div>
+
+    <h3>Background</h3>
+    <p>Your music history is a string where each character is a song. You want to brag about your longest listening streak without a single repeat.
+    Based on <a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/">LeetCode 3</a>.</p>
+
+    <h3>Task</h3>
+    <p>Return the length of the longest substring of <var>s</var> that contains no repeated characters.</p>
+    <pre class="c">int lengthOfLongestSubstring(char *s);</pre>
+
+    <p class="req">Required time complexity: <var>O(n)</var> on average</p>
+
+    <h3>Assumptions</h3>
+    <ul>
+        <li><var>s</var> may be empty, in which case the answer is 0.</li>
+        <li><var>s</var> contains ASCII characters, including spaces.</li>
+        <li>A substring is contiguous: <code>"pwke"</code> is not a substring of <code>"pwwkew"</code>.</li>
+    </ul>
+
+    <h3>Samples</h3>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 1</div><pre>s = "abcabcbb"</pre></div>
+        <div class="box"><div class="label">Sample Output 1</div><pre>3</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> The longest such substring is <code>"abc"</code>.</p>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 2</div><pre>s = "pwwkew"</pre></div>
+        <div class="box"><div class="label">Sample Output 2</div><pre>3</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> The longest such substring is <code>"wke"</code>.</p>
+
+    <h3>Files</h3>
+    <table class="files">
+        <tr><th>hashmap/longest_substring.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
+        <tr><th>tests/hashmap/longest_substring.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
+        <tr><th>hashmap/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
+    </table>
+
+    <h3>Testing</h3>
+    <p>You can test your function using:</p>
+    <pre>$ cd hashmap
+$ ./autotest longest_substring</pre>
+    <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
+    <pre>$ make
+$ ./longest_substring</pre>
+</section>
+
+<!-- ======================================================================= -->
+<section id="crunch-pringles" class="problem">
+    <div class="boxhead question"><h2>Problem 5.1</h2><span class="level"><i class="on"></i><i></i><i></i></span></div>
+    <div class="qsub"><h3>Crunch Pringles</h3><span>Stack / Queue · <a href="#contents">Back to contents</a></span></div>
+
+    <h3>Background</h3>
+    <p>A Pringles tube only opens at the top, so it behaves like a stack. Each chip has an integer crunch score, and you want to save the crunchiest chip for last.</p>
+
+    <h3>Task</h3>
+    <p>Sort the tube in place so that scores never decrease from bottom to top (the crunchiest chip ends up on top). You may use <code>bowl</code>, an empty stack, as temporary storage.</p>
+    <pre class="c">void sortTube(Stack tube, Stack bowl);
+
+// Useful ADT functions (every item is an int *)
+void StackPush(Stack s, void *item);
+void *StackPop(Stack s);
+void *StackPeek(Stack s);
+bool StackIsEmpty(Stack s);</pre>
+
+    <p class="req">Required time complexity: <var>O(n²)</var></p>
+
+    <h3>Assumptions</h3>
+    <ul>
+        <li>The tube may be empty. Scores may be negative or repeated.</li>
+        <li>Apart from the two stacks, use only a constant number of variables (no arrays or other ADTs).</li>
+        <li>Move the existing items. Do not allocate new ones.</li>
+    </ul>
+
+    <h3>Samples</h3>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 1</div><pre>tube (bottom -> top):
+3 1 4 2</pre></div>
+        <div class="box"><div class="label">Sample Output 1</div><pre>tube (bottom -> top):
+1 2 3 4</pre></div>
+    </div>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 2</div><pre>tube (bottom -> top):
+5 5 2</pre></div>
+        <div class="box"><div class="label">Sample Output 2</div><pre>tube (bottom -> top):
+2 5 5</pre></div>
+    </div>
+
+    <h3>Files</h3>
+    <table class="files">
+        <tr><th>stack_queue/crunch_pringles.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
+        <tr><th>tests/stack_queue/crunch_pringles.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
+        <tr><th>stack_queue/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
+    </table>
+
+    <h3>Testing</h3>
+    <p>You can test your function using:</p>
+    <pre>$ cd stack_queue
+$ ./autotest crunch_pringles</pre>
+    <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
+    <pre>$ make
+$ ./crunch_pringles</pre>
+</section>
+
+<section id="reverse-queue" class="problem">
+    <div class="boxhead question"><h2>Problem 5.2</h2><span class="level"><i class="on"></i><i class="on"></i><i></i></span></div>
+    <div class="qsub"><h3>Reverse Queue</h3><span>Stack / Queue · <a href="#contents">Back to contents</a></span></div>
+
+    <h3>Background</h3>
+    <p>It is happy hour at the food court, and the manager announces that whoever joined the queue last will be served first.</p>
+
+    <h3>Task</h3>
+    <p>Reverse the order of the items in the queue in place, so the item at the back ends up at the front.</p>
+    <pre class="c">void reverseQueue(Queue q);
+
+// Useful ADT functions (every item is an int *)
+void QueueEnqueue(Queue q, void *item);
+void *QueueDequeue(Queue q);
+bool QueueIsEmpty(Queue q);
+
+Stack StackNew(void);
+void StackPush(Stack s, void *item);
+void *StackPop(Stack s);
+bool StackIsEmpty(Stack s);
+void StackFree(Stack s, void (*freeItem)(void *item));</pre>
+
+    <p class="req">Required time complexity: <var>O(n)</var></p>
+
+    <h3>Assumptions</h3>
+    <ul>
+        <li>The queue may be empty. Values may be repeated.</li>
+        <li>Move the existing items. Do not allocate new ones.</li>
+    </ul>
+
+    <h3>Samples</h3>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 1</div><pre>q (front -> back):
+1 2 3 4 5</pre></div>
+        <div class="box"><div class="label">Sample Output 1</div><pre>q (front -> back):
+5 4 3 2 1</pre></div>
+    </div>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 2</div><pre>q (front -> back):
+3 3 1</pre></div>
+        <div class="box"><div class="label">Sample Output 2</div><pre>q (front -> back):
+1 3 3</pre></div>
+    </div>
+
+    <h3>Files</h3>
+    <table class="files">
+        <tr><th>stack_queue/reverse_queue.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
+        <tr><th>tests/stack_queue/reverse_queue.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
+        <tr><th>stack_queue/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
+    </table>
+
+    <h3>Testing</h3>
+    <p>You can test your function using:</p>
+    <pre>$ cd stack_queue
+$ ./autotest reverse_queue</pre>
+    <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
+    <pre>$ make
+$ ./reverse_queue</pre>
+</section>
+
+<section id="daily-temperatures" class="problem">
+    <div class="boxhead question"><h2>Problem 5.3</h2><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span></div>
+    <div class="qsub"><h3>Daily Temperatures</h3><span>Stack / Queue · <a href="#contents">Back to contents</a></span></div>
+
+    <h3>Background</h3>
+    <p>Sydney weather is unpredictable, and you are planning your beach days. For every day, you want to know how long you would have to wait for a warmer one.
+    Based on <a href="https://leetcode.com/problems/daily-temperatures/">LeetCode 739</a>.</p>
+
+    <h3>Task</h3>
+    <p><code>temperatures[i]</code> is the temperature on day <var>i</var>. For each day, set <code>answer[i]</code> to the number of days you have to wait after day <var>i</var> to get a warmer temperature, or 0 if there is no such day.</p>
+    <pre class="c">void dailyTemperatures(int temperatures[], int n, int answer[]);</pre>
+
+    <p class="req">Required time complexity: <var>O(n)</var></p>
+
+    <h3>Assumptions</h3>
+    <ul>
+        <li><var>0 ≤ n ≤ 200 000</var>, and <code>answer</code> has room for <var>n</var> values.</li>
+        <li>An equal temperature is not warmer.</li>
+        <li>An <var>O(n²)</var> solution is too slow for the largest test. Hint: a stack of days that are still waiting for a warmer day.</li>
+    </ul>
+
+    <h3>Samples</h3>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 1</div><pre>temperatures =
+[73, 74, 75, 71, 69, 72, 76, 73]</pre></div>
+        <div class="box"><div class="label">Sample Output 1</div><pre>answer =
+[1, 1, 4, 2, 1, 1, 0, 0]</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> Day 2 (<code>75</code>) waits until day 6 (<code>76</code>), so <code>answer[2] = 4</code>.</p>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 2</div><pre>temperatures =
+[30, 40, 50, 60]</pre></div>
+        <div class="box"><div class="label">Sample Output 2</div><pre>answer =
+[1, 1, 1, 0]</pre></div>
+    </div>
+
+    <h3>Files</h3>
+    <table class="files">
+        <tr><th>stack_queue/daily_temperatures.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
+        <tr><th>tests/stack_queue/daily_temperatures.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
+        <tr><th>stack_queue/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
+    </table>
+
+    <h3>Testing</h3>
+    <p>You can test your function using:</p>
+    <pre>$ cd stack_queue
+$ ./autotest daily_temperatures</pre>
+    <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
+    <pre>$ make
+$ ./daily_temperatures</pre>
+</section>
+
+<!-- ======================================================================= -->
+<section id="project-selection" class="problem">
+    <div class="boxhead question"><h2>Problem 6.1</h2><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span></div>
+    <div class="qsub"><h3>Project Selection</h3><span>Bonus · <a href="#contents">Back to contents</a></span></div>
+
+    <h3>Background</h3>
+    <p>You are planning your degree. Each project needs some knowledge before you can start it, and teaches you more once you finish. You only have time for <var>k</var> projects, so choose wisely.</p>
+
+    <h3>Task</h3>
+    <p>You are given two arrays <code>R</code> and <code>W</code>, and two other inputs <var>s</var> and <var>k</var>:</p>
+    <ul>
+        <li><code>R[i]</code> is the knowledge required to select project <var>i</var>,</li>
+        <li><code>W[i]</code> is the knowledge gained after selecting project <var>i</var>,</li>
+        <li><var>s</var> is your starting knowledge, and <var>k</var> is the number of projects to select.</li>
+    </ul>
+    <p>Your knowledge grows by <code>W[i]</code> after each project you select, and you cannot select the same project twice.</p>
+    <p><b>(a)</b> Which data structure solves the problem in <var>O(n log k)</var> time?</p>
+    <ol type="A">
+        <li>Stack</li>
+        <li>Queue</li>
+        <li>Unordered array</li>
+        <li>AVL tree</li>
+        <li>Heap</li>
+    </ol>
+    <p><b>(b)</b> Return the maximum knowledge you can have after selecting <var>k</var> projects.</p>
+    <pre class="c">int projectSelection(int R[], int W[], int n, int s, int k);</pre>
+
+    <p class="req">Required time complexity: <var>O(n log k)</var></p>
+
+    <h3>Assumptions</h3>
+    <ul>
+        <li><code>R</code> is sorted in ascending order.</li>
+        <li><var>1 ≤ k ≤ n</var>, and it is always possible to select <var>k</var> projects.</li>
+    </ul>
+
+    <h3>Samples</h3>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 1</div><pre>R = [1, 2, 2, 3, 4]
+W = [2, 3, 1, 4, 10]
+s = 2, k = 3</pre></div>
+        <div class="box"><div class="label">Sample Output 1</div><pre>19</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> Select projects 1, 4 and 3: 2 → 5 → 15 → 19.</p>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 2</div><pre>R = [0, 2, 5, 10]
+W = [5, 1, 10, 2]
+s = 0, k = 3</pre></div>
+        <div class="box"><div class="label">Sample Output 2</div><pre>17</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> Select projects 0, 2 and 3: 0 → 5 → 15 → 17.</p>
+
+    <h3>Files</h3>
+    <table class="files">
+        <tr><th>bonus/project_selection.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
+        <tr><th>tests/bonus/project_selection.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
+        <tr><th>bonus/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
+    </table>
+
+    <h3>Testing</h3>
+    <p>You can test your function using:</p>
+    <pre>$ cd bonus
+$ ./autotest project_selection</pre>
+    <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
+    <pre>$ make
+$ ./project_selection</pre>
+</section>
+
+</main>
+
+<script>
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const R = 13;
+
+function svg(tag, attrs) {
+    const el = document.createElementNS(SVG_NS, tag);
+    for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+    return el;
+}
+
+// Draws nodes {x, y, label} and edges [[a, b], ...] given in pixels
+function drawGraph(nodes, edges) {
+    const width = Math.max(...nodes.map(n => n.x)) + R + 2;
+    const height = Math.max(...nodes.map(n => n.y)) + R + 2;
+    const root = svg('svg', { width, height, viewBox: `0 0 ${width} ${height}` });
+    for (const [a, b] of edges) {
+        root.append(svg('line', { x1: a.x, y1: a.y, x2: b.x, y2: b.y }));
+    }
+    for (const n of nodes) {
+        root.append(svg('circle', { cx: n.x, cy: n.y, r: R }));
+        const text = svg('text', { x: n.x, y: n.y });
+        text.textContent = n.label;
+        root.append(text);
+    }
+    return root;
+}
+
+function bstInsert(tree, value) {
+    if (tree === null) return { value, left: null, right: null };
+    if (value < tree.value) tree.left = bstInsert(tree.left, value);
+    else tree.right = bstInsert(tree.right, value);
+    return tree;
+}
+
+// BSTs: x is the in-order rank, y is the depth
+for (const el of document.querySelectorAll('.bst')) {
+    const values = el.dataset.insert.split(' ').filter(Boolean).map(Number);
+    if (values.length === 0) {
+        el.textContent = 'X';
+        continue;
+    }
+    let tree = null;
+    for (const v of values) tree = bstInsert(tree, v);
+
+    const nodes = [];
+    const edges = [];
+    (function walk(t, depth) {
+        if (t === null) return;
+        walk(t.left, depth + 1);
+        t.x = R + 2 + nodes.length * 32;
+        t.y = R + 2 + depth * 40;
+        t.label = t.value;
+        nodes.push(t);
+        walk(t.right, depth + 1);
+        if (t.left) edges.push([t, t.left]);
+        if (t.right) edges.push([t, t.right]);
+    })(tree, 0);
+    el.append(drawGraph(nodes, edges));
+}
+
+// Graph used by Reach Darling Square and Find Happy Component
+for (const el of document.querySelectorAll('.sample-graph')) {
+    const pos = { 1: [0, 0], 2: [1, 0], 4: [2, 0], 3: [0, 1], 0: [1, 1], 5: [2, 1] };
+    const v = {};
+    for (const [label, [col, row]] of Object.entries(pos)) {
+        v[label] = { x: R + 2 + col * 56, y: R + 2 + row * 50, label };
+    }
+    el.append(drawGraph(Object.values(v), [[v[1], v[2]], [v[2], v[0]], [v[0], v[3]], [v[4], v[5]]]));
+}
+
+// C syntax highlighting: keywords, type names, function names and comments
+const TOKEN = /(\/\/.*)|\b(struct|int|bool|void|char|unsigned|long)\b|\b(node|Graph|Queue|Stack|HashTable|HashFn|EqualsFn)\b|\b([A-Za-z_]\w*)(?=\()/g;
+const CLASS = [null, 'cm', 'kw', 'ty', 'fn'];
+const escape = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+for (const pre of document.querySelectorAll('pre.c')) {
+    const code = pre.textContent;
+    let out = '';
+    let last = 0;
+    for (const m of code.matchAll(TOKEN)) {
+        const group = m.findIndex((g, i) => i > 0 && g !== undefined);
+        out += escape(code.slice(last, m.index)) + `<span class="${CLASS[group]}">${escape(m[0])}</span>`;
+        last = m.index + m[0].length;
+    }
+    pre.innerHTML = out + escape(code.slice(last));
+}
+</script>
+</body>
+</html>
