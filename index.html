@@ -910,11 +910,11 @@ $ ./longest_substring</pre>
     <div class="qsub"><h3>Crunch Pringles</h3><span>Stack / Queue · <a href="#contents">Back to contents</a></span></div>
 
     <h3>Background</h3>
-    <p>Abtin is preparing snacks for the CSESoc road trip. With a Pringles tube, you always eat the chip on top first, so the tube behaves like a stack. Each chip has an integer crunch score, and Abtin wants to eat the crunchiest chip first.</p>
+    <p>Abtin is preparing snacks for the CSESoc roadtrip. With a Pringles tube, you always eat the chip on top first, so the tube behaves like a stack. Each chip has an integer crunch score, but some chips have gone soggy, and nobody wants a soggy chip.</p>
 
     <h3>Task</h3>
-    <p>Sort the tube in place so that scores never decrease from bottom to top (the crunchiest chip ends up on top). You may use <code>bowl</code>, an empty stack, as temporary storage.</p>
-    <pre class="c">void sortTube(Stack tube, Stack bowl);
+    <p>Remove every soggy chip (crunch score 0) from the tube. The remaining chips must stay in their original order. You may use <code>bowl</code>, an empty stack, as temporary storage.</p>
+    <pre class="c">void removeSoggy(Stack tube, Stack bowl);
 
 // Useful ADT functions (every item is an int *)
 void StackPush(Stack s, void *item);
@@ -922,28 +922,30 @@ void *StackPop(Stack s);
 void *StackPeek(Stack s);
 bool StackIsEmpty(Stack s);</pre>
 
-    <p class="req">Required time complexity: <var>O(n²)</var></p>
+    <p class="req">Required time complexity: <var>O(n)</var></p>
 
     <h3>Assumptions</h3>
     <ul>
-        <li>The tube may be empty. Scores may be negative or repeated.</li>
-        <li>Apart from the two stacks, use only a constant number of variables (no arrays or other ADTs).</li>
+        <li>The tube may be empty, and every chip may be soggy.</li>
+        <li><code>bowl</code> must be empty again when you finish.</li>
         <li>Move the existing items. Do not allocate new ones.</li>
     </ul>
 
     <h3>Samples</h3>
     <div class="sample">
         <div class="box"><div class="label">Sample Input 1</div><pre>tube (bottom -> top):
-3 1 4 2</pre></div>
+3 0 4 0 2</pre></div>
         <div class="box"><div class="label">Sample Output 1</div><pre>tube (bottom -> top):
-1 2 3 4</pre></div>
+3 4 2</pre></div>
     </div>
+    <p class="explain"><em>Explanation:</em> Both soggy chips are removed, and <code>3 4 2</code> keeps its order.</p>
     <div class="sample">
         <div class="box"><div class="label">Sample Input 2</div><pre>tube (bottom -> top):
-5 5 2</pre></div>
+0 0 0</pre></div>
         <div class="box"><div class="label">Sample Output 2</div><pre>tube (bottom -> top):
-2 5 5</pre></div>
+(empty)</pre></div>
     </div>
+    <p class="explain"><em>Explanation:</em> Every chip is soggy, so the tube ends up empty.</p>
 
     <h3>Files</h3>
     <table class="files">

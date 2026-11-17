@@ -7,14 +7,13 @@
 #include "../adt/Stack.h"
 
 /**
- * A Pringles tube only opens at the top, so it behaves like a stack. Each
- * chip has an integer crunch score, and each item in the stacks is an
- * int * pointing to that score.
+ * A Pringles tube behaves like a stack. Each chip has an integer crunch
+ * score, and each item in the stacks is an int * pointing to that score.
  *
- * Sorts tube in place so that crunch scores never decrease from bottom to
- * top (the crunchiest chip ends up on top). bowl is an empty stack that can
- * be used as temporary storage.
+ * Removes every soggy chip (crunch score 0) from tube, keeping the other
+ * chips in their original order. bowl is an empty stack that can be used
+ * as temporary storage.
  */
-void sortTube(Stack tube, Stack bowl) {
+void removeSoggy(Stack tube, Stack bowl) {
     // TODO
 }

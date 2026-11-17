@@ -11,5 +11,10 @@
 /adt/tests/*
 !/adt/tests/*.c
 
+# Solutions and answer key stay local only
+/sol/
+/answer_key.pdf
+/answer_key.html
+
 # macOS debug symbols from `-g` (must stay last so the rules above can't re-include it)
 *.dSYM/

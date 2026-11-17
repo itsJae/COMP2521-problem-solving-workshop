@@ -7,7 +7,6 @@ Practice problems for the CSESoc Education COMP2521 problem solving workshop, wr
 ```
 <topic>/       starter code (fill in the TODO)
 tests/<topic>/ test cases used by ./autotest
-sol/<topic>/   solutions
 adt/           shared ADTs (Stack, Queue, Heap, PriorityQueue, HashTable, Graph, List, Bst)
 ```
 
