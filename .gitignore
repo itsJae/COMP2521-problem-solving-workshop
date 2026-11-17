@@ -16,5 +16,8 @@
 /answer_key.pdf
 /answer_key.html
 
+# Local Claude Code settings
+/.claude/
+
 # macOS debug symbols from `-g` (must stay last so the rules above can't re-include it)
 *.dSYM/
