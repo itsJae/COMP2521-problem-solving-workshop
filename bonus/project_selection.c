@@ -1,10 +1,10 @@
 /**
- * projectSelection
+ * Project Selection
  */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../adt/Heap.h"
+#include "../adt/Avl.h"
 
 /**
  * R[i] is the knowledge required to select project i, and W[i] is the

@@ -1,5 +1,5 @@
 /**
- * findHappyComponent
+ * Find Happy Squad
  */
 
 #include <stdio.h>
@@ -12,7 +12,7 @@
  * A component is happy if and only if it has at least k vertices.
  * Returns the number of happy components in the undirected graph g.
  */
-int findHappyComponent(Graph g, int k) {
+int findHappySquad(Graph g, int k) {
     // TODO
     return -1;
 }

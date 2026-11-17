@@ -1,5 +1,5 @@
 /**
- * copyAlternatingRange
+ * Copy Alternating Range
  */
 
 #include <stdio.h>

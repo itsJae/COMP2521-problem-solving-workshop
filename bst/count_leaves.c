@@ -1,5 +1,5 @@
 /**
- * countLeaves
+ * Count Leaves
  */
 
 #include <stdio.h>

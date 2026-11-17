@@ -1,5 +1,5 @@
 /**
- * deleteMid
+ * Delete Mid
  */
 
 #include <stdio.h>

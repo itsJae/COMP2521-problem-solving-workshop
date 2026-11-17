@@ -7,19 +7,19 @@ Practice problems for the CSESoc Education COMP2521 problem solving workshop, wr
 ```
 <topic>/       starter code (fill in the TODO)
 tests/<topic>/ test cases used by ./autotest
-adt/           shared ADTs (Stack, Queue, Heap, PriorityQueue, HashTable, Graph, List, Bst)
+adt/           shared ADTs (Stack, Queue, Heap, PriorityQueue, HashTable, Graph, List, Bst, Avl)
 ```
 
 ## Problems
 
 | Topic | Level 1 | Level 2 | Level 3 |
 |---|---|---|---|
-| `linked_list` | isSorted | copyAlternatingRange | deleteMid |
-| `bst` | countLeaves | treeDiameter | structuralDifference |
-| `graph` | reachDarlingSquare | findHappyComponent | celebrity |
-| `hashmap` | mollyTea | isomorphicStrings | longestSubstring |
-| `stack_queue` | crunchPringles | reverseQueue | dailyTemperatures |
-| `bonus` | | | projectSelection |
+| `linked_list` | Is Sorted | Delete Mid | Copy Alternating Range |
+| `bst` | Count Leaves | Tree Diameter | Structural Difference |
+| `graph` | Reach Darling Square | Find Happy Squad | Legends Never Die |
+| `hashmap` | Molly Tea | Isomorphic Strings | Longest Substring Without Repeating Characters |
+| `stack_queue` | Crunch Pringles | Reverse Queue | Daily Temperatures |
+| `bonus` | | | Project Selection |
 
 ## Setup
 

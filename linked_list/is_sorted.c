@@ -1,5 +1,5 @@
 /**
- * isSorted
+ * Is Sorted
  */
 
 #include <stdio.h>

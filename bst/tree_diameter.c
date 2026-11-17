@@ -1,5 +1,5 @@
 /**
- * treeDiameter
+ * Tree Diameter
  */
 
 #include <stdio.h>

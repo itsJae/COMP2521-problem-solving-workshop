@@ -1,5 +1,5 @@
 /**
- * structuralDifference
+ * Structural Difference
  */
 
 #include <stdio.h>

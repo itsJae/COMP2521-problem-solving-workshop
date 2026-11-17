@@ -1,5 +1,5 @@
 /**
- * reverseQueue
+ * Reverse Queue
  */
 
 #include <stdio.h>

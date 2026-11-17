@@ -1,5 +1,5 @@
 /**
- * celebrity
+ * Legends Never Die
  */
 
 #include <stdio.h>
@@ -11,7 +11,7 @@
  * everyone else and knows no one else. Returns the index of the
  * celebrity, or -1 if there is none.
  */
-int celebrity(int n, int mat[n][n]) {
+int legendsNeverDie(int n, int mat[n][n]) {
     // TODO
     return -2;
 }

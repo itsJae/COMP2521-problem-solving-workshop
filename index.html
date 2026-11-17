@@ -175,8 +175,8 @@
         <li>Linked List
             <ol>
                 <li><span class="num">1</span><span class="level"><i class="on"></i><i></i><i></i></span><a href="#is-sorted">Is Sorted</a></li>
-                <li><span class="num">2</span><span class="level"><i class="on"></i><i class="on"></i><i></i></span><a href="#copy-alternating-range">Copy Alternating Range</a></li>
-                <li><span class="num">3</span><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span><a href="#delete-mid">Delete Mid</a></li>
+                <li><span class="num">2</span><span class="level"><i class="on"></i><i class="on"></i><i></i></span><a href="#delete-mid">Delete Mid</a></li>
+                <li><span class="num">3</span><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span><a href="#copy-alternating-range">Copy Alternating Range</a></li>
             </ol>
         </li>
         <li>Binary Search Tree
@@ -186,11 +186,11 @@
                 <li><span class="num">6</span><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span><a href="#structural-difference">Structural Difference</a></li>
             </ol>
         </li>
-        <li>Graph Traversal
+        <li>Graph
             <ol>
                 <li><span class="num">7</span><span class="level"><i class="on"></i><i></i><i></i></span><a href="#reach-darling-square">Reach Darling Square</a></li>
-                <li><span class="num">8</span><span class="level"><i class="on"></i><i class="on"></i><i></i></span><a href="#find-happy-component">Find Happy Squad</a></li>
-                <li><span class="num">9</span><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span><a href="#celebrity">Celebrity</a></li>
+                <li><span class="num">8</span><span class="level"><i class="on"></i><i class="on"></i><i></i></span><a href="#find-happy-squad">Find Happy Squad</a></li>
+                <li><span class="num">9</span><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span><a href="#legends-never-die">Legends Never Die</a></li>
             </ol>
         </li>
         <li>Hash Table
@@ -293,8 +293,60 @@ $ ./autotest is_sorted</pre>
 $ ./is_sorted</pre>
 </section>
 
-<section id="copy-alternating-range" class="problem">
+<section id="delete-mid" class="problem">
     <div class="boxhead question"><h2>Problem 2</h2><span class="level"><i class="on"></i><i class="on"></i><i></i></span></div>
+    <div class="qsub"><h3>Delete Mid</h3><span>Linked List · <a href="#contents">Back to contents</a></span></div>
+
+    <h3>Background</h3>
+    <p>The waiting line for the CSESoc pubcrawl at Sanctuary Hotel is getting too long. Whoever is standing in the exact middle has been chosen to leave and grab more snacks.</p>
+
+    <h3>Task</h3>
+    <p>Delete the middle node of the list and return the head of the updated list. For a list of length <var>n</var>, the middle node is the one at index <var>⌊n/2⌋</var>, counting from 0.</p>
+    <pre class="c">struct node {
+    int value;
+    struct node *next;
+};
+
+struct node *deleteMid(struct node *list);</pre>
+
+    <p class="req">Required time complexity: <var>O(n)</var></p>
+
+    <h3>Assumptions</h3>
+    <ul>
+        <li>The list is not empty (<var>n ≥ 1</var>). If it has one node, the result is <code>NULL</code>.</li>
+        <li>The deleted node must be freed.</li>
+    </ul>
+
+    <h3>Samples</h3>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 1</div><pre>1 -> 3 -> 5 -> 7 -> 9 -> X</pre></div>
+        <div class="box"><div class="label">Sample Output 1</div><pre>1 -> 3 -> 7 -> 9 -> X</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> <var>n = 5</var>, so the node at index 2 (<code>5</code>) is deleted.</p>
+    <div class="sample">
+        <div class="box"><div class="label">Sample Input 2</div><pre>1 -> 2 -> 3 -> 4 -> X</pre></div>
+        <div class="box"><div class="label">Sample Output 2</div><pre>1 -> 2 -> 4 -> X</pre></div>
+    </div>
+    <p class="explain"><em>Explanation:</em> <var>n = 4</var>, so the node at index 2 (<code>3</code>) is deleted.</p>
+
+    <h3>Files</h3>
+    <table class="files">
+        <tr><th>linked_list/delete_mid.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
+        <tr><th>tests/linked_list/delete_mid.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
+        <tr><th>linked_list/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
+    </table>
+
+    <h3>Testing</h3>
+    <p>You can test your function using:</p>
+    <pre>$ cd linked_list
+$ ./autotest delete_mid</pre>
+    <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
+    <pre>$ make
+$ ./delete_mid</pre>
+</section>
+
+<section id="copy-alternating-range" class="problem">
+    <div class="boxhead question"><h2>Problem 3</h2><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span></div>
     <div class="qsub"><h3>Copy Alternating Range</h3><span>Linked List · <a href="#contents">Back to contents</a></span></div>
 
     <h3>Background</h3>
@@ -346,58 +398,6 @@ $ ./autotest copy_alternating_range</pre>
     <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
     <pre>$ make
 $ ./copy_alternating_range</pre>
-</section>
-
-<section id="delete-mid" class="problem">
-    <div class="boxhead question"><h2>Problem 3</h2><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span></div>
-    <div class="qsub"><h3>Delete Mid</h3><span>Linked List · <a href="#contents">Back to contents</a></span></div>
-
-    <h3>Background</h3>
-    <p>The waiting line for the CSESoc pubcrawl at Sanctuary Hotel is getting too long. Whoever is standing in the exact middle has been chosen to leave and grab more snacks.</p>
-
-    <h3>Task</h3>
-    <p>Delete the middle node of the list and return the head of the updated list. For a list of length <var>n</var>, the middle node is the one at index <var>⌊n/2⌋</var>, counting from 0.</p>
-    <pre class="c">struct node {
-    int value;
-    struct node *next;
-};
-
-struct node *deleteMid(struct node *list);</pre>
-
-    <p class="req">Required time complexity: <var>O(n)</var></p>
-
-    <h3>Assumptions</h3>
-    <ul>
-        <li>The list is not empty (<var>n ≥ 1</var>). If it has one node, the result is <code>NULL</code>.</li>
-        <li>The deleted node must be freed.</li>
-    </ul>
-
-    <h3>Samples</h3>
-    <div class="sample">
-        <div class="box"><div class="label">Sample Input 1</div><pre>1 -> 3 -> 5 -> 7 -> 9 -> X</pre></div>
-        <div class="box"><div class="label">Sample Output 1</div><pre>1 -> 3 -> 7 -> 9 -> X</pre></div>
-    </div>
-    <p class="explain"><em>Explanation:</em> <var>n = 5</var>, so the node at index 2 (<code>5</code>) is deleted.</p>
-    <div class="sample">
-        <div class="box"><div class="label">Sample Input 2</div><pre>1 -> 2 -> 3 -> 4 -> X</pre></div>
-        <div class="box"><div class="label">Sample Output 2</div><pre>1 -> 2 -> 4 -> X</pre></div>
-    </div>
-    <p class="explain"><em>Explanation:</em> <var>n = 4</var>, so the node at index 2 (<code>3</code>) is deleted.</p>
-
-    <h3>Files</h3>
-    <table class="files">
-        <tr><th>linked_list/delete_mid.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
-        <tr><th>tests/linked_list/delete_mid.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
-        <tr><th>linked_list/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
-    </table>
-
-    <h3>Testing</h3>
-    <p>You can test your function using:</p>
-    <pre>$ cd linked_list
-$ ./autotest delete_mid</pre>
-    <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
-    <pre>$ make
-$ ./delete_mid</pre>
 </section>
 
 <!-- ======================================================================= -->
@@ -566,7 +566,7 @@ $ ./structural_difference</pre>
 <!-- ======================================================================= -->
 <section id="reach-darling-square" class="problem">
     <div class="boxhead question"><h2>Problem 7</h2><span class="level"><i class="on"></i><i></i><i></i></span></div>
-    <div class="qsub"><h3>Reach Darling Square</h3><span>Graph Traversal · <a href="#contents">Back to contents</a></span></div>
+    <div class="qsub"><h3>Reach Darling Square</h3><span>Graph · <a href="#contents">Back to contents</a></span></div>
 
     <h3>Background</h3>
     <p>You and your friends are meeting for dinner at Darling Square. The city is a graph: each vertex is a location and each edge is a direct route between two locations. Before you leave, you want to know whether you can get there at all.</p>
@@ -628,16 +628,16 @@ $ ./autotest reach_darling_square</pre>
 $ ./reach_darling_square</pre>
 </section>
 
-<section id="find-happy-component" class="problem">
+<section id="find-happy-squad" class="problem">
     <div class="boxhead question"><h2>Problem 8</h2><span class="level"><i class="on"></i><i class="on"></i><i></i></span></div>
-    <div class="qsub"><h3>Find Happy Squad</h3><span>Graph Traversal · <a href="#contents">Back to contents</a></span></div>
+    <div class="qsub"><h3>Find Happy Squad</h3><span>Graph · <a href="#contents">Back to contents</a></span></div>
 
     <h3>Background</h3>
     <p>It is ARAM: Mayhem night in League of Legends. Two players are linked if they have duoed together, and anyone connected by a chain of duo partners can join the same squad. A squad is only happy if it has enough players to queue up together.</p>
 
     <h3>Task</h3>
     <p>A connected component is <em>happy</em> if and only if it has at least <var>k</var> vertices. Return how many components of the graph are happy.</p>
-    <pre class="c">int findHappyComponent(Graph g, int k);
+    <pre class="c">int findHappySquad(Graph g, int k);
 
 // Useful ADT functions
 int GraphNumVertices(Graph g);
@@ -678,30 +678,30 @@ k = 2</pre></div>
 
     <h3>Files</h3>
     <table class="files">
-        <tr><th>graph/find_happy_component.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
-        <tr><th>tests/graph/find_happy_component.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
+        <tr><th>graph/find_happy_squad.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
+        <tr><th>tests/graph/find_happy_squad.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
         <tr><th>graph/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
     </table>
 
     <h3>Testing</h3>
     <p>You can test your function using:</p>
     <pre>$ cd graph
-$ ./autotest find_happy_component</pre>
+$ ./autotest find_happy_squad</pre>
     <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
     <pre>$ make
-$ ./find_happy_component</pre>
+$ ./find_happy_squad</pre>
 </section>
 
-<section id="celebrity" class="problem">
+<section id="legends-never-die" class="problem">
     <div class="boxhead question"><h2>Problem 9</h2><span class="level"><i class="on"></i><i class="on"></i><i class="on"></i></span></div>
-    <div class="qsub"><h3>Celebrity</h3><span>Graph Traversal · <a href="#contents">Back to contents</a></span></div>
+    <div class="qsub"><h3>Legends Never Die</h3><span>Graph · <a href="#contents">Back to contents</a></span></div>
 
     <h3>Background</h3>
     <p>Rumour has it that Faker has sneaked into the CSESoc League of Legends tournament. Every player there knows Faker, but Faker does not know anyone. You may only ask questions of the form “does person <var>i</var> know person <var>j</var>?”.</p>
 
     <h3>Task</h3>
     <p>There are <var>n</var> people at the tournament, and <code>mat[i][j] == 1</code> if person <var>i</var> knows person <var>j</var>. A <em>celebrity</em> is known by everyone else but knows no one else. Return the index of the celebrity, or −1 if there is none.</p>
-    <pre class="c">int celebrity(int n, int mat[n][n]);</pre>
+    <pre class="c">int legendsNeverDie(int n, int mat[n][n]);</pre>
 
     <p class="req">Required time complexity: <var>O(n)</var></p>
 
@@ -733,18 +733,18 @@ mat:
 
     <h3>Files</h3>
     <table class="files">
-        <tr><th>graph/celebrity.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
-        <tr><th>tests/graph/celebrity.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
+        <tr><th>graph/legends_never_die.c</th><td>Contains the function you must implement. This is the only file you should modify.</td></tr>
+        <tr><th>tests/graph/legends_never_die.c</th><td>Test cases used by <code>autotest</code>.</td></tr>
         <tr><th>graph/Makefile</th><td>Builds the problem with <code>make</code>.</td></tr>
     </table>
 
     <h3>Testing</h3>
     <p>You can test your function using:</p>
     <pre>$ cd graph
-$ ./autotest celebrity</pre>
+$ ./autotest legends_never_die</pre>
     <p>To debug with your own <code>printf</code>s, build and run it directly. This only shows your own output:</p>
     <pre>$ make
-$ ./celebrity</pre>
+$ ./legends_never_die</pre>
 </section>
 
 <!-- ======================================================================= -->

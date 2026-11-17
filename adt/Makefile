@@ -7,7 +7,7 @@
 CC = gcc
 CFLAGS = -Wall -std=c11
 
-TESTS = test_stack test_queue test_heap test_pq test_hashtable test_graph test_list test_bst
+TESTS = test_stack test_queue test_heap test_pq test_hashtable test_graph test_list test_bst test_avl
 
 .PHONY: test clean
 
@@ -20,6 +20,7 @@ test:
 	$(CC) $(CFLAGS) Graph.c tests/test_graph.c -o tests/test_graph && ./tests/test_graph
 	$(CC) $(CFLAGS) List.c tests/test_list.c -o tests/test_list && ./tests/test_list
 	$(CC) $(CFLAGS) Bst.c tests/test_bst.c -o tests/test_bst && ./tests/test_bst
+	$(CC) $(CFLAGS) Avl.c tests/test_avl.c -o tests/test_avl && ./tests/test_avl
 
 clean:
 	rm -f $(addprefix tests/,$(TESTS))

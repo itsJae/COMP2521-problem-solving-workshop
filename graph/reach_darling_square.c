@@ -1,5 +1,5 @@
 /**
- * reachDarlingSquare
+ * Reach Darling Square
  */
 
 #include <stdio.h>

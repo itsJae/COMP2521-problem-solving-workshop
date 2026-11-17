@@ -1,5 +1,5 @@
 /**
- * crunchPringles
+ * Crunch Pringles
  */
 
 #include <stdio.h>
